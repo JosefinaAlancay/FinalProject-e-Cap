@@ -1,0 +1,15 @@
+.cta-section {
+  background-color: #224EA1;
+}
+
+.cta-button {
+  background-color: #15CF74;
+  color: #000;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #13b466;
+  color: white;
+}
