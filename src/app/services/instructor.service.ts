@@ -18,7 +18,10 @@ export class InstructorService {
     {id:1, name:"Mercedes", lastname:"Sosa", email:"merSosa@gmail.com", password:"123", studies:"Programer",rol_id:1, image:"https://images.pexels.com/photos/1674752/pexels-photo-1674752.jpeg" ,created_at: new Date()},
     {id:2, name:"Lucas", lastname:"Mendez", email:"luMendez@gmail.com", password:"123", studies:"Designer",rol_id:1, image:"https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg" ,created_at: new Date()},
     {id:3, name:"Franciso", lastname:"Herrera", email:"franHerrera@gmail.com", password:"123", studies:"Architect",image:"https://images.pexels.com/photos/3792581/pexels-photo-3792581.jpeg" ,rol_id:1 ,created_at: new Date()},
-    {id:3, name:"Pablo", lastname:"Valdes", email:"paValdes@gmail.com", password:"123", studies:"Gardener",rol_id:3, image:"mercedes.jpg" ,created_at: new Date()}
+    {id:4, name:"Franciso", lastname:"Herrera", email:"franHerrera@gmail.com", password:"123", studies:"Architect",image:"https://images.pexels.com/photos/3792581/pexels-photo-3792581.jpeg" ,rol_id:1 ,created_at: new Date()},
+    {id:5, name:"Franciso", lastname:"Herrera", email:"franHerrera@gmail.com", password:"123", studies:"Architect",image:"https://images.pexels.com/photos/3792581/pexels-photo-3792581.jpeg" ,rol_id:1 ,created_at: new Date()},
+    {id:6, name:"Franciso", lastname:"Herrera", email:"franHerrera@gmail.com", password:"123", studies:"Architect",image:"https://images.pexels.com/photos/3792581/pexels-photo-3792581.jpeg" ,rol_id:1 ,created_at: new Date()},
+    {id:7, name:"Pablo", lastname:"Valdes", email:"paValdes@gmail.com", password:"123", studies:"Gardener",rol_id:2, image:"mercedes.jpg" ,created_at: new Date()}
   ];
 
   // Obtener Instructores
