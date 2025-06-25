@@ -1,0 +1,39 @@
+<nav class="navbar bg-white py-3 px-4 shadow-sm">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+
+        <!-- Logo -->
+        <div class="d-flex align-items-center gap-2">
+            <img src="https://images.pexels.com/photos/8716096/pexels-photo-8716096.jpeg" alt="Logo" width="45" height="45" class="rounded-pill">
+            <span class="fw-bold fs-5">e-Cap</span>
+        </div>
+
+        <!-- Search bar -->
+        <form class="d-flex flex-grow-1 mx-4" style="max-width: 500px;">
+            <div class="position-relative w-100">
+                <input type="text" class="form-control rounded-pill pe-5 ps-4" placeholder="Qué quieres aprender hoy?"
+                    style="height: 50px;" />
+
+                <button type="submit"
+                    class="btn position-absolute top-50 end-0 translate-middle-y me-2 d-flex align-items-center justify-content-center shadow-sm"
+                    style="background-color: #15CF74; color: white; width: 40px; height: 40x; border-radius: 100%;">
+                    <i class="bi bi-search fs-5"></i>
+                </button>
+            </div>
+        </form>
+
+
+        <!-- Navigation links -->
+        <ul class="nav me-3">
+            <li class="nav-item"><a class="nav-link text-dark" routerLink="/">Principal</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" routerLink="/courses">Cursos</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" routerLink="/login">Ingresar</a></li>
+        </ul>
+
+        <!-- Join Button -->
+        <button class="btn text-white fw-semibold shadow-sm" style="background-color: #15CF74; border-radius: 8px;"
+            routerLink="/register">
+            Unete
+        </button>
+
+    </div>
+</nav>
