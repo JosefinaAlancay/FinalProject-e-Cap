@@ -1,0 +1,12 @@
+.stars {
+    color: #15CF74;
+}
+
+.bg-custom-dark {
+  background-color: #515151;
+}
+
+.stat-box {
+  max-width: 220px;
+  margin: auto; 
+}
