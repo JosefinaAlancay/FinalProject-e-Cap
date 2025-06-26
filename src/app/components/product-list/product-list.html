@@ -1,0 +1,54 @@
+<div class="container py-5">
+    <!-- Encabezado -->
+    <div class="text-center mb-4">
+        <span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill mb-2">Top Cursos</span>
+        <h2 class="fw-bold">Explora nuestros mejores cursos</h2>
+        <p class="text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum magni earum incidunt odit,
+            dolor vitae </p>
+    </div>
+
+    <!-- Filtro por categorías -->
+    <div class="d-flex justify-content-center flex-wrap gap-2 mb-4">
+        <button *ngFor="let category of categories" (click)="selectCategory(category.id)"
+            class="btn px-4 py-2 rounded-pill" [ngClass]="{
+        'btn-dark': selectedCategory === category.id,
+        'btn-outline-secondary': selectedCategory !== category.id
+      }">
+            {{ category.name }}
+        </button>
+    </div>
+
+    <!-- Lista de cursos -->
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-3" *ngFor="let course of filteredCourses">
+            <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
+                <img [src]="course.imagen" [alt]="course.title" class="card-img-top"
+                    style="height: 160px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title text-truncate">{{ course.title }}</h5>
+                    <p class="text-muted small mb-1">
+                        {{ getCategoryName(course.category_id) }}
+                    </p>
+
+                    <div class="mb-2">
+                        <span class="fw-bold text-success">${{ course.discount }}%</span>
+                        <small class="text-muted text-decoration-line-through ms-2">\${{ course.price }}</small>
+                    </div>
+                    <p class="small text-muted mb-1">Instructor ID: {{ course.instructor_id }}</p>
+                    <p class="small text-muted mb-2">4.8 ⭐ Reviews</p>
+                    <div class="d-flex justify-content-between text-muted small">
+                        <span><i class="bi bi-collection-play"></i> 12</span>
+                        <span><i class="bi bi-clock-history"></i> 8h 30m</span>
+                        <span><i class="bi bi-people"></i> 120</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="color: beige" class="text-center mt-4">
+            <a  style="background-color:#15CF74;" class="btn btn-outline-white px-4 py-2 rounded-pill fw-medium">
+                Ver todos los Cursos <i class="bi bi-arrow-right ms-2"></i>
+            </a>
+        </div>
+
+    </div>
+</div>
