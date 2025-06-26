@@ -1,0 +1,14 @@
+img.rounded-circle {
+  border: 2px solid white;
+}
+
+@media (max-width: 576px) {
+  h1.display-5 {
+    font-size: 2rem;
+  }
+
+  .student-badge,
+  .course-badge {
+    display: none;
+  }
+}

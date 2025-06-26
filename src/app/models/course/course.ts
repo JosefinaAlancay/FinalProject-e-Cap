@@ -10,7 +10,6 @@ import { Component } from '@angular/core';
 export class Course{
   
 }
-
 export interface Course {
   id: number;
   name: string;

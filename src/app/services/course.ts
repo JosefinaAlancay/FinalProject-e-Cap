@@ -20,3 +20,5 @@ export class CourseService {
     return of(this.courses.find(c => c.id === id));
   }
 }
+export { Course };
+

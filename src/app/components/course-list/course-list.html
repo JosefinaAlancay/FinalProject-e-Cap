@@ -1,1 +1,42 @@
-<p>course-list works!</p>
+<div class="container my-5">
+  <h2 class="fw-bold text-center mb-4">Explore Inspiring Online Courses</h2>
+
+  <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+    <button class="btn btn-sm btn-success rounded-pill">Featured</button>
+    <button class="btn btn-outline-dark btn-sm rounded-pill">Música</button>
+    <button class="btn btn-outline-dark btn-sm rounded-pill">Diseño y pintura</button>
+    <button class="btn btn-outline-dark btn-sm rounded-pill">Marketing</button>
+    <button class="btn btn-outline-dark btn-sm rounded-pill">Animación</button>
+    <button class="btn btn-outline-dark btn-sm rounded-pill">Social Media</button>
+    <button class="btn btn-outline-dark btn-sm rounded-pill">UI/UX design</button>
+    <button class="btn btn-outline-dark btn-sm rounded-pill">Creative Writing</button>
+    <button class="btn btn-outline-dark btn-sm rounded-pill">Digital Illustration</button>
+    <button class="btn btn-outline-dark btn-sm rounded-pill">Film & Video</button>
+    <button class="btn btn-outline-dark btn-sm rounded-pill">Crafts</button>
+    <button class="btn btn-outline-dark btn-sm rounded-pill">Freelance & Entrepreneurship</button>
+    <button class="btn btn-outline-dark btn-sm rounded-pill">Graphic Design</button>
+    <button class="btn btn-outline-dark btn-sm rounded-pill">Photography</button>
+    <button class="btn btn-outline-dark btn-sm rounded-pill">Productivity</button>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let course of courses">
+      <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+        <div class="position-relative">
+          <img [src]="course.image" class="card-img-top" [alt]="course.title" />
+          <div class="position-absolute bottom-0 end-0 bg-dark text-white px-2 py-1 small rounded-start">
+            {{ course.duration }}
+          </div>
+        </div>
+        <div class="card-body">
+          <small class="text-muted">{{ course.students }} students</small>
+          <h6 class="fw-semibold mt-2" [title]="course.title">
+            {{ course.title }}
+          </h6>
+          <p class="text-muted small mb-0">{{ course.author }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
