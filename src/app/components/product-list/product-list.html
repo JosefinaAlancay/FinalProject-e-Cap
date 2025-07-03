@@ -1,54 +1,81 @@
 <div class="container py-5">
     <!-- Encabezado -->
     <div class="text-center mb-4">
-        <span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill mb-2">Top Cursos</span>
+        <span class="badge bg-light text-primary py-2 px-3 rounded-pill mb-2">Top Cursos</span>
         <h2 class="fw-bold">Explora nuestros mejores cursos</h2>
         <p class="text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum magni earum incidunt odit,
-            dolor vitae </p>
+            dolor vitae</p>
     </div>
 
     <!-- Filtro por categorías -->
-    <div class="d-flex justify-content-center flex-wrap gap-2 mb-4">
-        <button *ngFor="let category of categories" (click)="selectCategory(category.id)"
-            class="btn px-4 py-2 rounded-pill" [ngClass]="{
-        'btn-dark': selectedCategory === category.id,
-        'btn-outline-secondary': selectedCategory !== category.id
-      }">
-            {{ category.name }}
-        </button>
+    <div class="d-flex justify-content-center position-relative mb-4 border-bottom" style="border-color: #d1d5db;">
+        <div class="d-flex gap-4 position-relative">
+
+            <div *ngFor="let category of categories" (click)="selectCategory(category.id)"
+                class="position-relative pb-2 cursor-pointer"
+                [ngClass]="{ 'fw-bold text-dark': selectedCategory === category.id, 'text-secondary': selectedCategory !== category.id }"
+                style="font-size: 1rem;">
+
+                {{ category.name }}
+
+                <div *ngIf="selectedCategory === category.id" class="position-absolute start-50 translate-middle-x"
+                    style="height: 4px; width: 50%; bottom: 0; border-radius: 5px; background-color: #15CF74;"></div>
+            </div>
+
+        </div>
     </div>
+
 
     <!-- Lista de cursos -->
     <div class="row g-4">
         <div class="col-md-6 col-lg-3" *ngFor="let course of filteredCourses">
-            <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
-                <img [src]="course.imagen" [alt]="course.title" class="card-img-top"
-                    style="height: 160px; object-fit: cover;">
-                <div class="card-body">
-                    <h5 class="card-title text-truncate">{{ course.title }}</h5>
-                    <p class="text-muted small mb-1">
-                        {{ getCategoryName(course.category_id) }}
-                    </p>
+            <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden" style="border: 1px solid #e0e0e0;">
 
+                <!-- Imagen del curso -->
+                <img [src]="course.imagen " alt="Curso" class="w-100"
+                    style="height: 180px; object-fit: cover;">
+
+                <div class="card-body text-start px-3 pb-3">
+                    <!-- Categoría -->
+                    <span class="badge bg-light text-dark mb-2 px-3 py-1 rounded-pill small">
+                        {{ getCategoryName(course.category_id) }}
+                    </span>
+
+                    <!-- Título del curso -->
+                    <h6 class="fw-bold mb-2 text-dark">{{ course.title }}</h6>
+
+                    <!-- Precio -->
                     <div class="mb-2">
-                        <span class="fw-bold text-success">${{ course.discount }}%</span>
-                        <small class="text-muted text-decoration-line-through ms-2">\${{ course.price }}</small>
+                        <small class="text-muted text-decoration-line-through me-2">${{ course.discount || 29
+                            }}</small>
+                        <span class="fw-bold text-primary">${{ course.price }}</span>
                     </div>
-                    <p class="small text-muted mb-1">Instructor ID: {{ course.instructor_id }}</p>
-                    <p class="small text-muted mb-2">4.8 ⭐ Reviews</p>
-                    <div class="d-flex justify-content-between text-muted small">
-                        <span><i class="bi bi-collection-play"></i> 12</span>
-                        <span><i class="bi bi-clock-history"></i> 8h 30m</span>
-                        <span><i class="bi bi-people"></i> 120</span>
+
+                    <!-- Instructor y reviews -->
+                    <div class="d-flex align-items-center gap-2 small text-muted mb-3">
+                        <img [src]="course.imagen + course.instructor_id"
+                            alt="Instructor" class="rounded-circle border border-white shadow-sm"
+                            style="width: 28px; height: 28px; object-fit: cover;">
+                        <span class="fw-medium text-dark">{{ course.instructor_id || 'Instructor ' +
+                            course.instructor_id }}</span>
+                        <i class="bi bi-star-fill text-warning ms-2"></i>
+                        <span>(4.8 Reviews)</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between border-top pt-2 text-muted small">
+                        <span><i class="bi bi-collection-play"></i> 05</span>
+                        <span><i class="bi bi-clock"></i> 11h 20m</span>
+                        <span><i class="bi bi-people"></i> 22</span>
                     </div>
                 </div>
             </div>
         </div>
-        <div style="color: beige" class="text-center mt-4">
-            <a  style="background-color:#15CF74;" class="btn btn-outline-white px-4 py-2 rounded-pill fw-medium">
-                Ver todos los Cursos <i class="bi bi-arrow-right ms-2"></i>
-            </a>
-        </div>
+    </div>
 
+
+    <div class="text-center mt-5">
+        <a class="btn px-4 py-2 rounded-pill fw-medium text-white shadow" style="background-color: #15CF74;">
+            Ver todos los Cursos <i class="bi bi-arrow-right ms-2"></i>
+        </a>
     </div>
 </div>

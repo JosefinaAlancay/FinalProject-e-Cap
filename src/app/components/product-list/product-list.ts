@@ -21,11 +21,11 @@ export class ProductList implements OnInit {
     { id: 3, name: 'Negocios' }
   ];
 
-  constructor(private courseService: ProductService) {}
+  constructor(private courseService: ProductService) { }
 
   ngOnInit(): void {
     this.courseService.getCourses().subscribe((data) => {
-      this.courses = data.slice(0, 4); 
+      this.courses = data.slice(0, 4);
       this.filteredCourses = this.courses;
       this.categories.unshift({ id: 0, name: 'All Courses' });
     });
@@ -39,9 +39,11 @@ export class ProductList implements OnInit {
   }
 
   getCategoryName(categoryId: number): string {
-  const category = this.categories.find(cat => cat.id === categoryId);
-  return category ? category.name : 'Sin categoría';
-}
+    const category = this.categories.find(cat => cat.id === categoryId);
+    return category ? category.name : 'Sin categoría';
+  }
+
+
 
 }
 
