@@ -22,7 +22,7 @@ export class App {
       .subscribe(() => {
         const currentUrl = this.router.url.split('?')[0];
         console.log('Ruta actual:', currentUrl);
-        this.showHeaderFooter = currentUrl !== '/login';
+        this.showHeaderFooter = currentUrl !== '/login' && currentUrl !== '/register';
       });
   }
 }

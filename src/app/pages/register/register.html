@@ -1,1 +1,64 @@
-<p>register works!</p>
+<div class="container-fluid d-flex vh-100 p-0">
+    <!-- Sidebar azul -->
+    <div class="col-md-3 bg-primary">
+        <img src="https://i.postimg.cc/02jsBBL1/joven-estudiando-en-una-biblioteca-usando-una-computadora-portatil.jpg"
+            class="rounded-5 img-fluid mb-3" alt="Login image" class="img-fluid h-100 w-100 object-fit-cover"
+            style="object-fit: cover; border-top-right-radius: 10px; border-bottom-right-radius: 10px;" />
+    </div>
+
+    <!-- Contenedor del formulario -->
+    <div class="col-md-9 d-flex justify-content-center align-items-center">
+
+        <div class="card shadow p-5 w-75">
+            <div>
+                <div class="mb-4 d-flex d-grid gap-3 align-items-center">
+                    <i [routerLink]="'/'" style="color: #15CF74;"
+                        class="bi bi-arrow-left-circle-fill fs-3 icon-hover"></i>
+                    <h6 class="mb-0 fw-bolder">Regresar</h6>
+                </div>
+                <h4 class="mb-4">Crea una cuenta</h4>
+                <form>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Nombre" />
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Apellido" />
+                            </div>
+                            <div class="mb-3">
+                                <div class="mb-3">
+                                    <select class="form-control">
+                                        <option value="" disabled selected>Nacionalidad</option>
+                                        <option value="AR">Argentina</option>
+                                        <option value="BO">Bolivia</option>
+                                        <option value="BR">Brasil</option>
+                                        <option value="CL">Chile</option>
+                                        <option value="CO">Colombia</option>
+                                        <option value="EC">Ecuador</option>
+                                        <option value="MX">México</option>
+                                        <option value="PY">Paraguay</option>
+                                        <option value="PE">Perú</option>
+                                        <option value="UY">Uruguay</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <input type="date" class="form-control" placeholder="Fecha de nacimiento" />
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" class="form-control" placeholder="Correo electrónico" />
+                            </div>
+                            <div class="mb-3">
+                                <input type="tel" class="form-control" placeholder="Número de teléfono" />
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Registrarse</button>
+                </form>
+            </div>
+        </div>
+    </div>
