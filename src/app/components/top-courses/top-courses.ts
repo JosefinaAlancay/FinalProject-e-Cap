@@ -2,15 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { Course } from '../../models/course.model';
 import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-product-list',
+  selector: 'app-top-courses',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './product-list.html',
-  styleUrl: './product-list.css'
+  imports: [CommonModule, RouterModule],
+  templateUrl: './top-courses.html',
+  styleUrl: './top-courses.css'
 })
-export class ProductList implements OnInit {
+export class TopCourses implements OnInit {
   courses: Course[] = [];
   filteredCourses: Course[] = [];
   selectedCategory: number = 0;

@@ -3,8 +3,8 @@ export interface Course {
     title: string;
     instructor_id: number;
     description: string;
-    price: number;
-    discount: number;
+    price: any;
+    discount: any;
     imagen: string;
     level: string;
     category_id: number;
