@@ -25,57 +25,16 @@
         </div>
     </div>
 
-
-    <!-- Lista de cursos -->
+    <!-- Card Courses -->
     <div class="row g-4">
         <div class="col-md-6 col-lg-3" *ngFor="let course of filteredCourses">
-            <a [routerLink]="['/courses', course.id]" class="text-decoration-none text-dark">
-                <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden" style="border: 1px solid #e0e0e0;">
-                    <img [src]="course.imagen" alt="Curso" class="w-100" style="height: 180px; object-fit: cover;">
-
-                    <div class="card-body text-start px-3 pb-3">
-                        <!-- Categoría -->
-                        <span class="badge bg-light text-dark mb-2 px-3 py-1 rounded-pill small">
-                            {{ getCategoryName(course.category_id) }}
-                        </span>
-
-                        <!-- Título del curso -->
-                        <h6 class="fw-bold mb-2 text-dark">{{ course.title }}</h6>
-
-                        <!-- Precio -->
-                        <div class="mb-2">
-                            <small class="text-muted text-decoration-line-through me-2">${{ course.discount || 29
-                                }}</small>
-                            <span class="fw-bold text-primary">${{ course.price }}</span>
-                        </div>
-
-                        <!-- Instructor y reviews -->
-                        <div class="d-flex align-items-center gap-2 small text-muted mb-3">
-                            <img [src]="course.imagen + course.instructor_id" alt="Instructor"
-                                class="rounded-circle border border-white shadow-sm"
-                                style="width: 28px; height: 28px; object-fit: cover;">
-                            <span class="fw-medium text-dark">{{ course.instructor_id || 'Instructor ' +
-                                course.instructor_id }}</span>
-                            <i class="bi bi-star-fill text-warning ms-2"></i>
-                            <span>(4.8 Reviews)</span>
-                        </div>
-
-                        <!-- Info -->
-                        <div class="d-flex justify-content-between border-top pt-2 text-muted small">
-                            <span><i class="bi bi-collection-play"></i> 05</span>
-                            <span><i class="bi bi-clock"></i> 11h 20m</span>
-                            <span><i class="bi bi-people"></i> 22</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
+            <app-course-card [course]="course"></app-course-card>
         </div>
     </div>
 
-
-
     <div class="text-center mt-5">
-        <a class="btn px-4 py-2 rounded-pill fw-medium text-white shadow" style="background-color: #15CF74;">
+        <a class="btn px-4 py-2 rounded-pill fw-medium text-white shadow" style="background-color: #15CF74;"
+            routerLink="courses">
             Ver todos los Cursos <i class="bi bi-arrow-right ms-2"></i>
         </a>
     </div>

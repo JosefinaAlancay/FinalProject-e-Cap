@@ -1,0 +1,24 @@
+/* Cambia el color del checkbox al verde personalizado */
+.custom-checkbox .form-check-input {
+    width: 1.1em;
+    height: 1.1em;
+    accent-color: #15CF74;
+    border: 1px solid #ccc;
+    transition: all 0.2s ease;
+}
+
+.custom-checkbox .form-check-input:checked {
+    background-color: #15CF74;
+    border-color: #15CF74;
+}
+
+/* Estilo de hover */
+.custom-checkbox .form-check-input:hover {
+    border-color: #15CF74;
+}
+
+/* Estética del label */
+.custom-checkbox .form-check-label {
+    font-size: 0.9rem;
+    color: #212529;
+}

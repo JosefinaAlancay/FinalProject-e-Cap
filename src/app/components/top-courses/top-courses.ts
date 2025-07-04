@@ -3,11 +3,12 @@ import { Course } from '../../models/course.model';
 import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { CourseCard } from "../course-card/course-card";
 
 @Component({
   selector: 'app-top-courses',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, CourseCard],
   templateUrl: './top-courses.html',
   styleUrl: './top-courses.css'
 })
