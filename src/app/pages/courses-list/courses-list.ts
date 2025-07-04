@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class CoursesList {
   viewMode: 'grid' | 'list' = 'grid';
-  
+
   setView(mode: 'grid' | 'list'): void {
     this.viewMode = mode;
   }
@@ -36,7 +36,7 @@ export class CoursesList {
   currentPage: number = 1;
   pageSize: number = 6;
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     this.productService.getCourses().subscribe((data) => {
@@ -45,7 +45,7 @@ export class CoursesList {
       this.onSortChange();
     });
 
-    this.categories = this.productService['category']; // mock de categorías
+    this.categories = this.productService['category'];
   }
 
   get paginatedCourses(): Course[] {
