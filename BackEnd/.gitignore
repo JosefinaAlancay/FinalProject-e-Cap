@@ -1,4 +1,8 @@
 # compiled output
+/docker-compose/mysql/mysql_data/mysql.sock
+/docker-compose/mysql/mysql_data/*.index
+/docker-compose/mysql/mysql_data/*.cnf
+/docker-compose/mysql/mysql_data/ib_buffer_pool
 /dist
 /node_modules
 /build
