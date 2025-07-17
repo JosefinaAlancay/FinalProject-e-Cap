@@ -9,6 +9,7 @@ export class ResponseCourseDTO {
   imagen_url: string;
   status: CourseStatus;
   level: CourseLevel;
+  rating: number;
 
   //lesson
   totalDuration: string;

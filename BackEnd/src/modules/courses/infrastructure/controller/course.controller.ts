@@ -19,6 +19,14 @@ export class CourseController {
         return this.courseService.findById(id);
     }
 
+
+    // TOP CURSOS
+    @Get('top')
+    getTopCourses(@Query('category_id') category_id?: number) {
+        return this.courseService.getTopCourses(category_id);
+    }
+
+
     // ELIMINAR
     @Delete(':id')
     remove(@Param('id') id: number) {

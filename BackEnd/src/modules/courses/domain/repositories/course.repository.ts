@@ -36,6 +36,25 @@ export class CourseRepository {
         return this.repository.find(options);
     }
 
+    // TOP CURSOS
+    async findTopCourses(category_id?: number): Promise<Course[]> {
+        const query = this.repository
+            .createQueryBuilder('course')
+            .leftJoinAndSelect('course.category', 'category')
+            .leftJoinAndSelect('course.instructor', 'instructor')
+            .leftJoinAndSelect('instructor.user', 'user')
+            .leftJoinAndSelect('course.lessons', 'lessons')
+            .orderBy('course.rating', 'DESC')
+            .limit(4);
+
+        if (category_id) {
+            query.where('course.category.id = :categoryId', { category_id });
+        }
+
+        return query.getMany();
+    }
+
+
     // ELIMINAR
     async remove(course: Course): Promise<void> {
         await this.repository.remove(course);

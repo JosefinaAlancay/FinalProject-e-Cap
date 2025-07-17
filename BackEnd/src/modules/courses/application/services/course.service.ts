@@ -24,6 +24,7 @@ export class CourseService implements ICourseService {
       imagen_url: course.imagen_url,
       status: course.status,
       level: course.level,
+      rating: course.rating,
 
       // lesson
       totalLessons,
@@ -58,6 +59,13 @@ export class CourseService implements ICourseService {
     const courses = await this.courseRepository.findWithFilters(filters);
     return courses.map(course => this.toDTO(course));
   }
+
+  // TOP CURSOS
+  async getTopCourses(category_id?: number): Promise<ResponseCourseDTO[]> {
+    const courses = await this.courseRepository.findTopCourses(category_id);
+    return courses.map(course => this.toDTO(course));
+  }
+
 
 
   // ELIMINAR 

@@ -37,6 +37,9 @@ export class Course {
     })
     level: CourseLevel;
 
+    @Column('float', { default: 0 })
+    rating: number;
+
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     created_At: Date;
 
