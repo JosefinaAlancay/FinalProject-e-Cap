@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Course } from '../../models/course.model';
 import { CourseCard } from '../../components/course-card/course-card';
 import { Category } from '../../models/category.model';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-courses-list',
@@ -14,64 +15,87 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './courses-list.html',
   styleUrl: './courses-list.css'
 })
-export class CoursesList {
-  viewMode: 'grid' | 'list' = 'grid';
-
-  setView(mode: 'grid' | 'list'): void {
-    this.viewMode = mode;
-  }
-
+export class CourseList implements OnInit {
   courses: Course[] = [];
   filteredCourses: Course[] = [];
+  paginatedCourses: Course[] = [];
+
   categories: Category[] = [];
-  selectedCategories: number[] = [];
+  levels: string[] = ['BÁSICO', 'INTERMEDIO', 'AVANZADO'];
+
+  selectedCategories: string[] = [];
   selectedLevels: string[] = [];
-  levels: string[] = ['PRINCIPIANTE', 'MEDIO', 'AVANZADO'];
+  searchTerm: string = '';
   sortOption: string = 'new';
 
-  // Búsqueda
-  searchTerm: string = '';
-
-  // Paginación
   currentPage: number = 1;
-  pageSize: number = 6;
+  itemsPerPage: number = 9;
+  totalPages: number = 1;
+
+  viewMode: 'grid' | 'list' = 'grid';
 
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
-    this.productService.getCourses().subscribe((data) => {
-      this.courses = data;
-      this.filteredCourses = [...this.courses];
-      this.onSortChange();
+    this.loadCategories();
+    this.fetchCourses();
+  }
+
+  loadCategories(): void {
+    this.productService.getCategories().subscribe((cats) => {
+      console.log('Cursos recibidos:', this.categories);
+      this.categories = cats;
     });
 
-    this.categories = this.productService['category'];
   }
 
-  get paginatedCourses(): Course[] {
-    const start = (this.currentPage - 1) * this.pageSize;
-    const end = start + this.pageSize;
-    return this.filteredCourses.slice(start, end);
+  fetchCourses(): void {
+    const offset = (this.currentPage - 1) * this.itemsPerPage;
+
+    this.productService
+      .getCourses({
+        name: this.searchTerm,
+        categoryIds: this.selectedCategories,
+        levels: this.selectedLevels,
+        limit: this.itemsPerPage,
+        offset,
+        sort: this.sortOption,
+      })
+      .subscribe((courses) => {
+        this.courses = courses;
+        this.filteredCourses = courses;
+        this.totalPages = Math.ceil(courses.length / this.itemsPerPage);
+        this.paginate();
+      });
   }
 
-  get totalPages(): number {
-    return Math.ceil(this.filteredCourses.length / this.pageSize);
+  paginate(): void {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    this.paginatedCourses = this.filteredCourses.slice(
+      start,
+      start + this.itemsPerPage
+    );
   }
 
   changePage(page: number): void {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
-    }
+    this.currentPage = page;
+    this.fetchCourses();
+  }
+
+  onSearchChange(): void {
+    this.currentPage = 1;
+    this.fetchCourses();
   }
 
   onCategoryChange(event: any): void {
-    const id = +event.target.value;
+    const id = event.target.value;
     if (event.target.checked) {
       this.selectedCategories.push(id);
     } else {
-      this.selectedCategories = this.selectedCategories.filter(c => c !== id);
+      this.selectedCategories = this.selectedCategories.filter((c) => c !== id);
     }
-    this.applyFilters();
+    this.currentPage = 1;
+    this.fetchCourses();
   }
 
   onLevelChange(event: any): void {
@@ -79,51 +103,19 @@ export class CoursesList {
     if (event.target.checked) {
       this.selectedLevels.push(level);
     } else {
-      this.selectedLevels = this.selectedLevels.filter(l => l !== level);
+      this.selectedLevels = this.selectedLevels.filter((l) => l !== level);
     }
-    this.applyFilters();
-  }
-
-  onSearchChange(): void {
-    this.applyFilters();
-  }
-
-  applyFilters(): void {
     this.currentPage = 1;
-
-    this.filteredCourses = this.courses.filter(course => {
-      const matchCategory =
-        this.selectedCategories.length === 0 ||
-        this.selectedCategories.includes(course.category_id);
-
-      const matchLevel =
-        this.selectedLevels.length === 0 ||
-        this.selectedLevels.includes(course.level);
-
-      const matchSearch =
-        this.searchTerm.trim() === '' ||
-        course.title.toLowerCase().includes(this.searchTerm.toLowerCase());
-
-      return matchCategory && matchLevel && matchSearch;
-    });
-
-    this.onSortChange();
+    this.fetchCourses();
   }
 
   onSortChange(): void {
-    switch (this.sortOption) {
-      case 'priceLow':
-        this.filteredCourses.sort((a, b) => a.price - b.price);
-        break;
-      case 'priceHigh':
-        this.filteredCourses.sort((a, b) => b.price - a.price);
-        break;
-      case 'new':
-      default:
-        this.filteredCourses.sort((a, b) =>
-          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-        );
-        break;
-    }
+    this.currentPage = 1;
+    this.fetchCourses();
   }
+
+  setView(mode: 'grid' | 'list'): void {
+    this.viewMode = mode;
+  }
+  
 }

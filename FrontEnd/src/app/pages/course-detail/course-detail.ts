@@ -12,19 +12,19 @@ import { CommonModule } from '@angular/common';
   styleUrl: './course-detail.css'
 })
 export class CourseDetail implements OnInit {
-  course: Course | undefined;
+  course!: Course;
   activeTab: string = 'overview';
 
   constructor(private route: ActivatedRoute, private productService: ProductService) { }
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.productService.getCourses().subscribe(courses => {
-      this.course = courses.find(c => c.id === id);
+    this.productService.getCourseById(id).subscribe((course) => {
+      this.course = course;
     });
   }
 
   getOriginalPrice(price: number, discount: number): number {
-    return (price / (1 - discount / 100)).toFixed(2) as unknown as number;
+    return Number((price / (1 - discount / 100)).toFixed(2));
   }
 }

@@ -12,17 +12,8 @@ import { Course } from '../../models/course.model';
 })
 export class CourseCard {
   @Input() course!: Course;
-  @Input() mode: 'grid' | 'list' = 'grid'; 
 
-  categories = [
-    { id: 1, name: 'Desarrollo' },
-    { id: 2, name: 'Diseño' },
-    { id: 3, name: 'Negocios' }
-  ];
-
-  getCategoryName(categoryId: number): string {
-    const category = this.categories.find(cat => cat.id === categoryId);
-    return category ? category.name : 'Sin categoría';
+  getOriginalPrice(price: number, discount: number): number {
+    return Number((price / (1 - discount / 100)).toFixed(2));
   }
-
 }

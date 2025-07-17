@@ -13,12 +13,13 @@
 
             <div *ngFor="let category of categories" (click)="selectCategory(category.id)"
                 class="position-relative pb-2 cursor-pointer"
-                [ngClass]="{ 'fw-bold text-dark': selectedCategory === category.id, 'text-secondary': selectedCategory !== category.id }"
+                [ngClass]="{ 'fw-bold text-dark': selectedCategory === category.id, 'text-secondary': selectedCategory !== category.id}"
                 style="font-size: 1rem;">
 
                 {{ category.name }}
 
-                <div *ngIf="selectedCategory === category.id" class="position-absolute start-50 translate-middle-x"
+                <div *ngIf="selectedCategory === category.id"
+                    class="position-absolute start-50 translate-middle-x"
                     style="height: 4px; width: 50%; bottom: 0; border-radius: 5px; background-color: #15CF74;"></div>
             </div>
 

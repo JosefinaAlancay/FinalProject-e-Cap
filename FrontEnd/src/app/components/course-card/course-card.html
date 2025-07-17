@@ -1,11 +1,11 @@
 <a [routerLink]="['/courses', course.id]" class="text-decoration-none text-dark">
     <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden" style="border: 1px solid #e0e0e0;">
-        <img [src]="course.imagen" alt="Curso" class="w-100" style="height: 180px; object-fit: cover;">
+        <img [src]="course.image_url" alt="Curso" class="w-100" style="height: 180px; object-fit: cover;" />
 
         <div class="card-body text-start px-3 pb-3">
             <!-- Categoría -->
             <span class="badge bg-light text-dark mb-2 px-3 py-1 rounded-pill small">
-                {{ getCategoryName(course.category_id) }}
+                {{ course.category.name || 'Sin categoría' }}
             </span>
 
             <!-- Título del curso -->
@@ -13,25 +13,28 @@
 
             <!-- Precio -->
             <div class="mb-2">
-                <small class="text-muted text-decoration-line-through me-2">${{ course.discount || 29 }}</small>
+                <small class="text-muted text-decoration-line-through me-2">
+                    ${{ getOriginalPrice(course.price, course.discount) }}
+                </small>
                 <span class="fw-bold text-primary">${{ course.price }}</span>
             </div>
 
             <!-- Instructor y reviews -->
             <div class="d-flex align-items-center gap-2 small text-muted mb-3">
-                <img [src]="course.imagen + course.instructor_id" alt="Instructor"
+                <img src="https://via.placeholder.com/28" alt="Instructor"
                     class="rounded-circle border border-white shadow-sm"
-                    style="width: 28px; height: 28px; object-fit: cover;">
-                <span class="fw-medium text-dark">{{ course.instructor_id || 'Instructor ' + course.instructor_id
-                    }}</span>
+                    style="width: 28px; height: 28px; object-fit: cover;" />
+                <span class="fw-medium text-dark">
+                    {{ course.instructor.name }} {{ course.instructor.last_name }}
+                </span>
                 <i class="bi bi-star-fill text-warning ms-2"></i>
                 <span>(4.8 Reviews)</span>
             </div>
 
             <!-- Info -->
             <div class="d-flex justify-content-between border-top pt-2 text-muted small">
-                <span><i class="bi bi-collection-play"></i> 05</span>
-                <span><i class="bi bi-clock"></i> 11h 20m</span>
+                <span><i class="bi bi-collection-play"></i> {{ course.total_lessons }}</span>
+                <span><i class="bi bi-clock"></i> {{ course.total_duration }}</span>
                 <span><i class="bi bi-people"></i> 22</span>
             </div>
         </div>

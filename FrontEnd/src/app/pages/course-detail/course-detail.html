@@ -2,7 +2,7 @@
     <div class="row g-5">
         <!-- Imagen del curso -->
         <div class="col-lg-8">
-            <img [src]="course.imagen" [alt]="course.title" class="img-fluid rounded mb-4"
+            <img [src]="course.image_url" [alt]="course.title" class="img-fluid rounded mb-4"
                 style="max-height: 400px; object-fit: cover; width: 100%;">
 
             <!-- Rating y título -->
@@ -89,17 +89,20 @@
 
                     <p class="text-muted small">29-Días de garantía de devolución</p>
 
-                    <a href="#" class="btn w-100 mb-3 fw-bold" style="color: white; background-color: #15CF74;">Compar Ahora</a>
+                    <a href="#" class="btn w-100 mb-3 fw-bold" style="color: white; background-color: #15CF74;">Compar
+                        Ahora</a>
 
                     <ul class="list-unstyled small text-muted">
                         <li class="mb-2 d-flex justify-content-between"><strong>Duración:</strong> <span>4 Horas</span>
                         </li>
-                        <li class="mb-2 d-flex justify-content-between"><strong>Inscriptos:</strong> <span>100</span></li>
+                        <li class="mb-2 d-flex justify-content-between"><strong>Inscriptos:</strong> <span>100</span>
+                        </li>
                         <li class="mb-2 d-flex justify-content-between"><strong>Lecciones:</strong> <span>80</span></li>
                         <li class="mb-2 d-flex justify-content-between"><strong>Nivel:</strong> <span>{{
                                 course.level }}</span></li>
                         <li class="mb-2 d-flex justify-content-between"><strong>Horario:</strong>
-                            <span>Monday–Friday</span></li>
+                            <span>Monday–Friday</span>
+                        </li>
                         <li class="d-flex justify-content-between"><strong>Leguaje:</strong> <span>Inglés</span></li>
                     </ul>
                 </div>

@@ -4,6 +4,7 @@ import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CourseCard } from "../course-card/course-card";
+import { Category } from '../../models/category.model';
 
 @Component({
   selector: 'app-top-courses',
@@ -13,39 +14,31 @@ import { CourseCard } from "../course-card/course-card";
   styleUrl: './top-courses.css'
 })
 export class TopCourses implements OnInit {
-  courses: Course[] = [];
+  categories: Category[] = [];
   filteredCourses: Course[] = [];
-  selectedCategory: number = 0;
+  selectedCategory: number | null = null;
 
-  categories = [
-    { id: 1, name: 'Desarrollo' },
-    { id: 2, name: 'Diseño' },
-    { id: 3, name: 'Negocios' }
-  ];
-
-  constructor(private courseService: ProductService) { }
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
-    this.courseService.getCourses().subscribe((data) => {
-      this.courses = data.slice(0, 4);
-      this.filteredCourses = this.courses;
-      this.categories.unshift({ id: 0, name: 'All Courses' });
+    this.loadCategories();
+    this.loadTopCourses();
+  }
+
+  loadCategories(): void {
+    this.productService.getCategories().subscribe((cats) => {
+      this.categories = cats;
     });
   }
 
-  selectCategory(categoryId: number): void {
-    this.selectedCategory = categoryId;
-    this.filteredCourses = categoryId === 0
-      ? this.courses
-      : this.courses.filter(c => c.category_id === categoryId);
+  loadTopCourses(): void {
+    this.productService.getTopCourses(this.selectedCategory || undefined).subscribe((courses) => {
+      this.filteredCourses = courses;
+    });
   }
 
-  getCategoryName(categoryId: number): string {
-    const category = this.categories.find(cat => cat.id === categoryId);
-    return category ? category.name : 'Sin categoría';
+  selectCategory(category_id: number): void {
+    this.selectedCategory = category_id;
+    this.loadTopCourses();
   }
-
-
-
 }
-
