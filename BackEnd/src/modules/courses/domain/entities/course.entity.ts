@@ -1,8 +1,8 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { CourseLevel, CourseStatus } from "../value-objects/course.enum";
-import { Category } from "src/modules/categories/category.entity";
 import { Instructor } from "src/modules/users/instructor/instructor.entity";
 import { Lesson } from "src/modules/lessons/lesson.entity";
+import { Category } from "src/modules/categories/domain/category.entity";
 
 @Entity()
 export class Course {
