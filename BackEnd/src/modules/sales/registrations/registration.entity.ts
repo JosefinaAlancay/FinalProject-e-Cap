@@ -2,7 +2,7 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, Pr
 import { RegistrationStatus } from "./registration.enum";
 import { Sale } from "../sale.entity";
 import { User } from "src/modules/users/user.entity";
-import { Course } from "src/modules/courses/course.entity";
+import { Course } from "src/modules/courses/domain/entities/course.entity";
 
 @Entity()
 export class Registration {

@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Course } from "../courses/course.entity";
+import { Course } from "../courses/domain/entities/course.entity";
 
 @Entity()
 export class Category{
@@ -9,8 +9,6 @@ export class Category{
     @Column({ length: 100 })
     name: string;
 
-    @Column()
-    category_id: number;
 
     @OneToMany(() => Course, course => course.category)
     courses: Course[];

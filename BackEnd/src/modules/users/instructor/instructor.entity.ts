@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, NumericType, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
 import { User } from "../user.entity";
-import { Course } from "src/modules/courses/course.entity";
+import { Course } from "src/modules/courses/domain/entities/course.entity";
+
 
 @Entity()
 export class Instructor {
