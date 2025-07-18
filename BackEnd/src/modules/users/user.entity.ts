@@ -20,6 +20,9 @@ export class User {
     @Column()
     password: string;
 
+    @Column()
+    profile_picture: string;
+
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     created_At: Date;
 

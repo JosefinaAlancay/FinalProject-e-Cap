@@ -12,8 +12,8 @@ export class ResponseCourseDTO {
   rating: number;
 
   //lesson
-  totalDuration: string;
-  totalLessons: number;
+  total_duration: string;
+  total_lessons: number;
 
   category: {
     id: number | null;
@@ -24,6 +24,8 @@ export class ResponseCourseDTO {
     id: number | null;
     name: string | null;
     last_name: string | null;
-    rating: number | null; 
+    rating: number | null;
+    biography: string; 
+    profile_picture: string;
   };
 }

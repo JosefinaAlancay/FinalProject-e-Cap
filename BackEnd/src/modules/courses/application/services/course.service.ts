@@ -11,7 +11,7 @@ export class CourseService implements ICourseService {
   // MAPEO
   private toDTO(course: Course): ResponseCourseDTO {
     const lessons = course.lessons || [];
-    const totalLessons = lessons.length;
+    const total_lessons = lessons.length;
     const totalMinutes = lessons.reduce((sum, l) => sum + Number(l.duration), 0);
     const formattedDuration = formatDuration(totalMinutes);
 
@@ -27,8 +27,8 @@ export class CourseService implements ICourseService {
       rating: course.rating,
 
       // lesson
-      totalLessons,
-      totalDuration: formattedDuration,
+      total_lessons,
+      total_duration: formattedDuration,
 
       category: course.category?.id
         ? {
@@ -37,8 +37,8 @@ export class CourseService implements ICourseService {
         }
         : { id: null, name: 'Sin categoría' },
       instructor: course.instructor?.user
-        ? { id: course.instructor.user.id, name: course.instructor.user.name, last_name: course.instructor.user.last_name, rating: course.instructor.rating }
-        : { id: null, name: 'Sin', last_name: ' Instructor', rating: 0 }
+        ? { id: course.instructor.user.id, name: course.instructor.user.name, last_name: course.instructor.user.last_name, rating: course.instructor.rating, biography:course.instructor.biography, profile_picture:course.instructor.user.profile_picture }
+        : { id: null, name: 'Sin', last_name: ' Instructor', rating: 0, biography:'Biography', profile_picture:"https://media.istockphoto.com/id/2151669184/vector/vector-flat-illustration-in-grayscale-avatar-user-profile-person-icon-gender-neutral.webp?s=2048x2048&w=is&k=20&c=mwUeVWLqj8MiuGo3ZjStxTvHdVab26OtVitg65Gz0B8=" }
 
     };
   }
@@ -65,8 +65,6 @@ export class CourseService implements ICourseService {
     const courses = await this.courseRepository.findTopCourses(category_id);
     return courses.map(course => this.toDTO(course));
   }
-
-
 
   // ELIMINAR 
   async delete(id: number): Promise<{ message: string }> {
