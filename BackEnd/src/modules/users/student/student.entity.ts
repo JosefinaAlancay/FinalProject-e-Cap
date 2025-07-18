@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { User } from "../user.entity";
 
 @Entity()
@@ -13,6 +13,6 @@ export class Student {
     @Column()
     completed_courses: number;
 
-    @Column()
+    @UpdateDateColumn()
     last_access: Date;
 }

@@ -1,6 +1,6 @@
+import { Sale } from "src/modules/sales/domain/sale.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { PaymentMethod, PaymentStatus } from "./payment.enum";
-import { Sale } from "./sale.entity";
+import { PaymentMethod, PaymentStatus } from "../value-objects/payment.enum";
 
 
 @Entity()
@@ -10,7 +10,7 @@ export class Payment {
 
     @Column({ type: "decimal", precision: 10, scale: 2 })
     amount: number;
-
+    
     @Column({
         type: "enum",
         enum: PaymentMethod

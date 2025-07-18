@@ -1,7 +1,8 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { User } from "../users/user.entity";
-import { Registration } from "./registrations/registration.entity";
-import { Payment } from "./payment.entity";
+import { User } from "../../users/user.entity";
+import { Payment } from "src/modules/payments/domain/entities/payment.entity";
+import { Registration } from "src/modules/registrations/domain/entities/registration.entity";
+
 
 @Entity()
 export class Sale {
@@ -24,5 +25,5 @@ export class Sale {
 
     @OneToMany(() => Payment, payment => payment.sale)
     payments: Payment[];
-    
+
 }

@@ -1,8 +1,8 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { RegistrationStatus } from "./registration.enum";
-import { Sale } from "../sale.entity";
 import { User } from "src/modules/users/user.entity";
 import { Course } from "src/modules/courses/domain/entities/course.entity";
+import { Sale } from "src/modules/sales/domain/sale.entity";
+import { RegistrationStatus } from "../value-objects/registration.enum";
 
 @Entity()
 export class Registration {
@@ -20,7 +20,7 @@ export class Registration {
     inscription_date: Date;
 
     // Relaciones
-    @ManyToMany(() => User)
+    @ManyToOne(() => User, { nullable: false })
     @JoinColumn({ name: "user_id" })
     user: User;
 

@@ -1,10 +1,14 @@
-import { Controller, Delete, Get, Param, Query } from '@nestjs/common';
+import { Controller, Delete, Get, Inject, Param, ParseIntPipe, Query } from '@nestjs/common';
 import { CourseService } from '../../application/services/course.service';
 import { CourseFilterDTO } from '../../application/dto/CourseFilterDTO';
+import { RegistrationService } from 'src/modules/registrations/application/service/registration.service';
 
 @Controller('courses')
 export class CourseController {
-    constructor(private readonly courseService: CourseService) { }
+    constructor(
+        private readonly courseService: CourseService,
+        private readonly registrationService: RegistrationService,
+    ) {}
 
 
     // BUSQUEDAS
@@ -32,4 +36,11 @@ export class CourseController {
     remove(@Param('id') id: number) {
         return this.courseService.delete(id);
     }
+
+    // CONTADOR DE ESTUDIANTES EN CURSO
+    @Get('/course/:courseId/students-count')
+    countByCourse(@Param('courseId', ParseIntPipe) courseId: number) {
+        return this.registrationService.countStudentsInCourse(courseId);
+    }
+
 }
