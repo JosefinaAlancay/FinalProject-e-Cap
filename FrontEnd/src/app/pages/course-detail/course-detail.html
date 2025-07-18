@@ -2,21 +2,21 @@
     <div class="row g-5">
         <!-- Imagen del curso -->
         <div class="col-lg-8">
-            <img [src]="course.image_url" [alt]="course.title" class="img-fluid rounded mb-4"
+            <img [src]="course.imagen_url " [alt]="course.title" class="img-fluid rounded mb-4"
                 style="max-height: 400px; object-fit: cover; width: 100%;">
 
             <!-- Rating y título -->
             <div class="mb-3">
                 <div class="text-warning small">
-                    <i class="bi bi-star-fill"></i> <span class="text-muted">(4.7)</span>
+                    <i class="bi bi-star-fill"></i> <span class="text-muted">{{course.rating}}</span>
                 </div>
                 <h2 class="fw-bold">{{ course.title }}</h2>
             </div>
 
             <!-- Detalles con íconos -->
             <div class="d-flex align-items-center text-muted small mb-3 border-bottom pb-3">
-                <div class="me-4"><i class="bi bi-journal-text me-1 fw-bold" style=" color: #15CF74;"></i> 10 Temas
-                </div>
+                <div class="me-4"><i class="bi bi-journal-text me-1 fw-bold"
+                        style=" color: #15CF74;"></i>{{course.total_lessons}}</div>
                 <div class="me-4"><i class="bi bi-clock me-1" style=" color: #15CF74;"></i> 9.00AM–01.00PM</div>
                 <div><i class="bi bi-people me-1" style=" color: #15CF74;"></i> Estudiantes 20+</div>
             </div>
@@ -62,14 +62,13 @@
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="overview" role="tabpanel">
                     <h5 class="fw-bold text-uppercase">Course Description</h5>
-                    <p class="text-muted">{{ course.description }} Lorem ipsum dolor sit amet, consectetur adipiscing
-                        elit. Sed non urna. Phasellus eu ligula. Vestibulum sit amet purus.</p>
+                    <p class="text-muted">{{ course.description }}</p>
                 </div>
                 <div class="tab-pane fade" id="curriculum" role="tabpanel">
                     <p class="text-muted">Curriculum content here...</p>
                 </div>
                 <div class="tab-pane fade" id="instructor" role="tabpanel">
-                    <p class="text-muted">Instructor information here...</p>
+                    <p class="text-muted">{{course.instructor.biography}}</p>
                 </div>
                 <div class="tab-pane fade" id="reviews" role="tabpanel">
                     <p class="text-muted">Student reviews go here...</p>
@@ -83,21 +82,26 @@
                 <img [src]="'https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg'" class="card-img-top"
                     alt="Estudiantes">
                 <div class="card-body">
-                    <h6 class="text-muted mb-1">Course Fee</h6>
-                    <h4 class="mb-3"> <del class="text-muted me-2">$120</del> <span class="text-primary">${{
+                    <h4 class="mb-3"> <del class="text-muted me-2">${{ getOriginalPrice(course.price, course.discount)
+                            }}</del> <span class="text-primary">${{
                             course.price }}</span></h4>
 
                     <p class="text-muted small">29-Días de garantía de devolución</p>
 
-                    <a href="#" class="btn w-100 mb-3 fw-bold" style="color: white; background-color: #15CF74;">Compar
-                        Ahora</a>
+                    <a (click)="purchaseCourse()" class="btn w-100 mb-3 fw-bold text-white"
+                        style="background-color: #15CF74;">
+                        Comprar Ahora
+                    </a>
+
 
                     <ul class="list-unstyled small text-muted">
-                        <li class="mb-2 d-flex justify-content-between"><strong>Duración:</strong> <span>4 Horas</span>
+                        <li class="mb-2 d-flex justify-content-between"><strong>Duración:</strong>
+                            <span>{{course.total_duration}}</span>
                         </li>
-                        <li class="mb-2 d-flex justify-content-between"><strong>Inscriptos:</strong> <span>100</span>
+                        <li class="mb-2 d-flex justify-content-between"><strong>Inscriptos:</strong><span>10</span>
                         </li>
-                        <li class="mb-2 d-flex justify-content-between"><strong>Lecciones:</strong> <span>80</span></li>
+                        <li class="mb-2 d-flex justify-content-between"><strong>Lecciones:</strong>
+                            <span>{{course.total_lessons}}</span></li>
                         <li class="mb-2 d-flex justify-content-between"><strong>Nivel:</strong> <span>{{
                                 course.level }}</span></li>
                         <li class="mb-2 d-flex justify-content-between"><strong>Horario:</strong>

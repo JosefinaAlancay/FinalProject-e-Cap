@@ -2,10 +2,11 @@ export interface Course {
     id: number;
     title: string;
     description:string;
-    image_url: string;
+    imagen_url: string;
     price: number;
     discount: number;
-    level:string;
+    level:string
+    rating: number;
     total_lessons: number;
     total_duration: string;
     category: {
@@ -16,5 +17,7 @@ export interface Course {
         name: string;
         last_name: string;
         rating: number;
+        biography: string;
+        profile_image: string;
     };
 }

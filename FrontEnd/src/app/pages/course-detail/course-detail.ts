@@ -3,6 +3,7 @@ import { Course } from '../../models/course.model';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
+import { PurchaseService } from '../../services/purchase.service';
 
 @Component({
   selector: 'app-course-detail',
@@ -14,8 +15,13 @@ import { CommonModule } from '@angular/common';
 export class CourseDetail implements OnInit {
   course!: Course;
   activeTab: string = 'overview';
+  userId = 5;
 
-  constructor(private route: ActivatedRoute, private productService: ProductService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private productService: ProductService,
+    private purchaseService: PurchaseService
+  ) { }
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -25,6 +31,20 @@ export class CourseDetail implements OnInit {
   }
 
   getOriginalPrice(price: number, discount: number): number {
-    return Number((price / (1 - discount / 100)).toFixed(2));
+    return Number((price / (1 - discount)).toFixed(2));
   }
+
+  // COMPRAR
+  purchaseCourse() {
+    this.purchaseService.purchaseCourse(this.userId, this.course.id).subscribe({
+      next: () => {
+        window.open('https://mpago.la/1NPFM8r', '_blank');
+        alert('Registro exitoso. Completa el pago en el enlace.');
+      },
+      error: () => {
+        alert('Error al procesar la compra');
+      }
+    });
+  }
+
 }
