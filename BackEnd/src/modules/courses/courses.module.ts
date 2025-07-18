@@ -6,11 +6,13 @@ import { Registration } from '../registrations/domain/entities/registration.enti
 import { Course } from './domain/entities/course.entity';
 import { RegistrationsModule } from '../registrations/registrations.module';
 import { CourseRepository } from './domain/repositories/course.repository';
+import { Category } from '../categories/domain/category.entity';
+import { Instructor } from '../users/instructor/instructor.entity';
 
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Course, Registration]),
+    TypeOrmModule.forFeature([Course, Registration, Category, Instructor]),
     RegistrationsModule,
   ],
   controllers: [CourseController],

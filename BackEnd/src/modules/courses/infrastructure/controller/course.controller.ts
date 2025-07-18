@@ -1,14 +1,19 @@
-import { Controller, Delete, Get, Inject, Param, ParseIntPipe, Query } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Inject, Param, ParseIntPipe, Post, Query, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { CourseService } from '../../application/services/course.service';
 import { CourseFilterDTO } from '../../application/dto/CourseFilterDTO';
 import { RegistrationService } from 'src/modules/registrations/application/service/registration.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { extname } from 'path';
+import { CreateCourseDto } from '../../application/dto/CreateCourseDTO';
+import { diskStorage } from 'multer';
+import { multerConfig } from 'src/config/multer.config';
 
 @Controller('courses')
 export class CourseController {
     constructor(
         private readonly courseService: CourseService,
         private readonly registrationService: RegistrationService,
-    ) {}
+    ) { }
 
 
     // BUSQUEDAS
@@ -43,4 +48,14 @@ export class CourseController {
         return this.registrationService.countStudentsInCourse(courseId);
     }
 
+
+    // CREAR
+    @Post()
+    @UseInterceptors(FileInterceptor('imagen', multerConfig))
+    async createCourse(
+        @Body() body: CreateCourseDto,
+        @UploadedFile() file: Express.Multer.File,
+    ) {
+        return this.courseService.createCourse(body, file);
+    }
 }

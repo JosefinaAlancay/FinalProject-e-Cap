@@ -1,10 +1,13 @@
-import { IsString, IsNumber, IsOptional } from 'class-validator';
+import { IsString, IsNumber, IsOptional, IsEnum, IsNotEmpty } from 'class-validator';
+import { CourseLevel, CourseStatus } from '../../domain/value-objects/course.enum';
 
 export class CreateCourseDto {
     @IsString()
+    @IsNotEmpty()
     title: string;
 
     @IsString()
+    @IsNotEmpty()
     description: string;
 
     @IsNumber()
@@ -13,18 +16,16 @@ export class CreateCourseDto {
     @IsNumber()
     discount: number;
 
-    @IsString()
-    imagen_url: string;
+    @IsEnum(CourseLevel)
+    level: CourseLevel;
 
-    @IsString()
-    status: string;
-
-    @IsString()
-    level: string;
+    @IsOptional()
+    @IsEnum(CourseStatus)
+    status?: CourseStatus;
 
     @IsNumber()
     categoryId: number;
 
     @IsNumber()
-    userId: number;
+    instructorId: number;
 }

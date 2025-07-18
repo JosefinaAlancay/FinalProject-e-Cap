@@ -59,4 +59,14 @@ export class CourseRepository {
     async remove(course: Course): Promise<void> {
         await this.repository.remove(course);
     }
+
+    // CREAR    
+    createCourse(courseData: Partial<Course>): Course {
+        return this.repository.create(courseData); // método de TypeORM que crea una instancia pero no guarda
+    }
+
+    async saveCourse(course: Course): Promise<Course> {
+        return await this.repository.save(course); // método de TypeORM que guarda la instancia
+    }
+
 }
