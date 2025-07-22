@@ -3,12 +3,12 @@ import { ICourseService } from '../interfaces/CourseInterface';
 import { Course } from '../../domain/entities/course.entity';
 import { ResponseCourseDTO } from '../dto/CourseReposeDTO';
 import { CourseRepository } from '../../domain/repositories/course.repository';
-import { CourseFilterDTO } from '../dto/CourseFilterDTO';
 import { CreateCourseDto } from '../dto/CreateCourseDTO';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from 'src/modules/categories/domain/category.entity';
 import { Repository } from 'typeorm';
 import { Instructor } from 'src/modules/users/instructor/instructor.entity';
+import { CourseFilterDTO } from '../dto/CourseFilterDTO';
 
 @Injectable()
 export class CourseService implements ICourseService {
@@ -66,11 +66,27 @@ export class CourseService implements ICourseService {
     return this.toDTO(course);
   }
 
-  // FILTRO
-  async findAllWithFilters(filters: CourseFilterDTO): Promise<ResponseCourseDTO[]> {
-    const courses = await this.courseRepository.findWithFilters(filters);
+  async findAll(): Promise<ResponseCourseDTO[]> {
+    const courses = await this.courseRepository.findAll();
     return courses.map(course => this.toDTO(course));
   }
+
+  async getFilteredCourses(dto: CourseFilterDTO, sort?: string): Promise<{ data: ResponseCourseDTO[]; total: number }> {
+    let [courses, total] = await this.courseRepository.filterCourses(dto);
+
+    if (sort === 'price_asc') {
+      courses = courses.sort((a, b) => a.price - b.price);
+    } else if (sort === 'price_desc') {
+      courses = courses.sort((a, b) => b.price - a.price);
+    } else if (sort === 'newest') {
+      courses = courses.sort((a, b) => b.created_At.getTime() - a.created_At.getTime());
+    }
+
+    const data = courses.map(c => this.toDTO(c));
+    return { data, total };
+  }
+
+
 
   // TOP CURSOS
   async getTopCourses(category_id?: number): Promise<ResponseCourseDTO[]> {
@@ -99,10 +115,9 @@ export class CourseService implements ICourseService {
       throw new NotFoundException('Category or Instructor not found');
     }
 
-
     const course = this.courseRepository.createCourse({
       ...dto,
-      imagen_url:imagenUrl,
+      imagen_url: imagenUrl,
       category,
       instructor,
     });

@@ -3,10 +3,9 @@ import { CourseService } from '../../application/services/course.service';
 import { CourseFilterDTO } from '../../application/dto/CourseFilterDTO';
 import { RegistrationService } from 'src/modules/registrations/application/service/registration.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { extname } from 'path';
 import { CreateCourseDto } from '../../application/dto/CreateCourseDTO';
-import { diskStorage } from 'multer';
 import { multerConfig } from 'src/config/multer.config';
+import { ResponseCourseDTO } from '../../application/dto/CourseReposeDTO';
 
 @Controller('courses')
 export class CourseController {
@@ -18,8 +17,8 @@ export class CourseController {
 
     // BUSQUEDAS
     @Get()
-    findAll(@Query() filters: CourseFilterDTO) {
-        return this.courseService.findAllWithFilters(filters);
+    findAll(@Query() dto: CourseFilterDTO, @Query('sort') sort: string) {
+        return this.courseService.getFilteredCourses(dto, sort);
     }
 
 

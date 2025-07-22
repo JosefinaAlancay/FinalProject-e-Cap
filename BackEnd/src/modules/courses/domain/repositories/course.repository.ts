@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Repository, DataSource, ILike, FindManyOptions } from "typeorm";
 import { Course } from "../entities/course.entity";
 import { CourseFilterDTO } from "../../application/dto/CourseFilterDTO";
+import { CourseStatus } from "../value-objects/course.enum";
 
 @Injectable()
 export class CourseRepository {
@@ -16,25 +17,39 @@ export class CourseRepository {
         return this.repository.findOne({ where: { id }, relations: ['category', 'lessons', 'instructor.user'] })
     }
 
-    // FILTRO
-    async findWithFilters(filters: CourseFilterDTO): Promise<Course[]> {
-        const { limit = 10, offset = 0, category_id, title, level } = filters;
-
-        const where: any = {};
-        if (category_id) where.category = { id: category_id };
-        if (title) where.title = ILike(`%${title}%`);
-        if (level) where.level = level;
-
-
-        const options: FindManyOptions<Course> = {
-            skip: offset,
-            take: limit,
+    async findAll(): Promise<Course[]> {
+        return this.repository.find({
             relations: ['category', 'instructor.user', 'lessons'],
-            where,
-        };
-
-        return this.repository.find(options);
+            order: { id: 'DESC' },
+        });
     }
+
+    // FILTRO
+    async filterCourses(dto: CourseFilterDTO): Promise<[Course[], number]> {
+        const { limit = 10, offset = 0, category_id, title, level } = dto;
+
+        const query = this.repository.createQueryBuilder('course')
+            .leftJoinAndSelect('course.category', 'category')
+            .leftJoinAndSelect('course.instructor', 'instructor')
+            .where('course.status = :status', { status: CourseStatus.ACTIVE });
+
+        if (title) {
+            query.andWhere('course.title LIKE :title', { title: `%${title}%` });
+        }
+
+        if (category_id) {
+            query.andWhere('category.id = :category_id', { category_id });
+        }
+
+        if (level) {
+            query.andWhere('course.level = :level', { level });
+        }
+
+        query.skip(offset).take(limit);
+
+        return query.getManyAndCount(); 
+    }
+
 
     // TOP CURSOS
     async findTopCourses(category_id?: number): Promise<Course[]> {
