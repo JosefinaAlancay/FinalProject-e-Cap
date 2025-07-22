@@ -6,7 +6,6 @@ import { CourseCard } from '../../components/course-card/course-card';
 import { Category } from '../../models/category.model';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-courses-list',
@@ -21,7 +20,7 @@ export class CourseList implements OnInit {
   paginatedCourses: Course[] = [];
 
   categories: Category[] = [];
-  levels: string[] = ['BÁSICO', 'INTERMEDIO', 'AVANZADO'];
+  levels: string[] = ['BEGINNER', 'INTERMEDIATE', 'ADVANCED'];
 
   selectedCategories: string[] = [];
   selectedLevels: string[] = [];
@@ -38,7 +37,7 @@ export class CourseList implements OnInit {
 
   ngOnInit(): void {
     this.loadCategories();
-    this.fetchCourses();
+    this.loadCourses();
   }
 
   loadCategories(): void {
@@ -49,53 +48,53 @@ export class CourseList implements OnInit {
 
   }
 
-  fetchCourses(): void {
-    const offset = (this.currentPage - 1) * this.itemsPerPage;
-
-    this.productService
-      .getCourses({
-        name: this.searchTerm,
-        categoryIds: this.selectedCategories,
-        levels: this.selectedLevels,
-        limit: this.itemsPerPage,
-        offset,
-        sort: this.sortOption,
-      })
-      .subscribe((courses) => {
-        this.courses = courses;
-        this.filteredCourses = courses;
-        this.totalPages = Math.ceil(courses.length / this.itemsPerPage);
-        this.paginate();
-      });
+  setView(mode: 'grid' | 'list'): void {
+    this.viewMode = mode;
   }
 
-  paginate(): void {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    this.paginatedCourses = this.filteredCourses.slice(
-      start,
-      start + this.itemsPerPage
-    );
-  }
 
-  changePage(page: number): void {
-    this.currentPage = page;
-    this.fetchCourses();
+  // FILTRO
+  loadCourses(): void {
+    const filters: any = {
+      offset: (this.currentPage - 1) * this.itemsPerPage,
+      limit: this.itemsPerPage,
+      sort: this.sortOption
+    };
+
+    if (this.searchTerm.trim()) {
+      filters.title = this.searchTerm;
+    }
+
+    if (this.selectedCategories.length > 0) {
+      filters.category_id = this.selectedCategories;
+    }
+
+    if (this.selectedLevels.length > 0) {
+      filters.level = this.selectedLevels;
+    }
+
+    this.productService.getCourses(filters).subscribe((response) => {
+      this.courses = response.data;
+      this.filteredCourses = response.data;
+      this.totalPages = Math.ceil(response.total / this.itemsPerPage);
+      this.paginatedCourses = response.data;
+    });
   }
 
   onSearchChange(): void {
     this.currentPage = 1;
-    this.fetchCourses();
+    this.loadCourses();
   }
 
   onCategoryChange(event: any): void {
-    const id = event.target.value;
+    const categoryId = event.target.value;
     if (event.target.checked) {
-      this.selectedCategories.push(id);
+      this.selectedCategories.push(categoryId);
     } else {
-      this.selectedCategories = this.selectedCategories.filter((c) => c !== id);
+      this.selectedCategories = this.selectedCategories.filter(id => id !== categoryId);
     }
     this.currentPage = 1;
-    this.fetchCourses();
+    this.loadCourses();
   }
 
   onLevelChange(event: any): void {
@@ -103,19 +102,19 @@ export class CourseList implements OnInit {
     if (event.target.checked) {
       this.selectedLevels.push(level);
     } else {
-      this.selectedLevels = this.selectedLevels.filter((l) => l !== level);
+      this.selectedLevels = this.selectedLevels.filter(l => l !== level);
     }
     this.currentPage = 1;
-    this.fetchCourses();
+    this.loadCourses();
   }
 
   onSortChange(): void {
     this.currentPage = 1;
-    this.fetchCourses();
+    this.loadCourses();
   }
 
-  setView(mode: 'grid' | 'list'): void {
-    this.viewMode = mode;
+  changePage(page: number): void {
+    this.currentPage = page;
+    this.loadCourses();
   }
-  
 }

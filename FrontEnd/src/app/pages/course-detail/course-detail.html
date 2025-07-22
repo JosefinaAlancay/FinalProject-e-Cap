@@ -1,3 +1,8 @@
+<div *ngIf="alertMessage" class="alert {{ alertClass }} position-fixed bottom-0 end-0 m-3 shadow" role="alert"
+    style="z-index: 1055;">
+    {{ alertMessage }}
+</div>
+
 <div class="container py-5" *ngIf="course">
     <div class="row g-5">
         <!-- Imagen del curso -->
@@ -28,16 +33,7 @@
                         [ngClass]="{ 'active': activeTab === 'overview' }" (click)="activeTab = 'overview'"
                         style="border-radius: 8px;"
                         [ngStyle]="{ 'background-color': activeTab === 'overview' ? '#15CF74' : '', 'color': activeTab === 'overview' ? 'white' : 'black' }">
-                        Overview
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link px-4 py-2" id="curriculum-tab" data-bs-toggle="pill"
-                        data-bs-target="#curriculum" type="button" role="tab"
-                        [ngClass]="{ 'active': activeTab === 'curriculum' }" (click)="activeTab = 'curriculum'"
-                        style="border-radius: 8px;"
-                        [ngStyle]="{ 'background-color': activeTab === 'curriculum' ? '#15CF74' : '', 'color': activeTab === 'curriculum' ? 'white' : 'black' }">
-                        Curriculum
+                        Description
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
@@ -49,13 +45,12 @@
                         Instructor
                     </button>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link px-4 py-2" id="reviews-tab" data-bs-toggle="pill" data-bs-target="#reviews"
-                        type="button" role="tab" [ngClass]="{ 'active': activeTab === 'reviews' }"
-                        (click)="activeTab = 'reviews'" style="border-radius: 8px;"
-                        [ngStyle]="{ 'background-color': activeTab === 'reviews' ? '#15CF74' : '', 'color': activeTab === 'reviews' ? 'white' : 'black' }">
-                        Reviews
+                <li>
+                    <!-- Botón de agregar curso -->
+                    <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#createCourseModal">
+                        <i class="bi bi-plus-circle me-2"></i>Agregar Curso
                     </button>
+
                 </li>
             </ul>
 
@@ -64,14 +59,8 @@
                     <h5 class="fw-bold text-uppercase">Course Description</h5>
                     <p class="text-muted">{{ course.description }}</p>
                 </div>
-                <div class="tab-pane fade" id="curriculum" role="tabpanel">
-                    <p class="text-muted">Curriculum content here...</p>
-                </div>
                 <div class="tab-pane fade" id="instructor" role="tabpanel">
                     <p class="text-muted">{{course.instructor.biography}}</p>
-                </div>
-                <div class="tab-pane fade" id="reviews" role="tabpanel">
-                    <p class="text-muted">Student reviews go here...</p>
                 </div>
             </div>
         </div>
@@ -101,7 +90,8 @@
                         <li class="mb-2 d-flex justify-content-between"><strong>Inscriptos:</strong><span>10</span>
                         </li>
                         <li class="mb-2 d-flex justify-content-between"><strong>Lecciones:</strong>
-                            <span>{{course.total_lessons}}</span></li>
+                            <span>{{course.total_lessons}}</span>
+                        </li>
                         <li class="mb-2 d-flex justify-content-between"><strong>Nivel:</strong> <span>{{
                                 course.level }}</span></li>
                         <li class="mb-2 d-flex justify-content-between"><strong>Horario:</strong>
@@ -113,4 +103,67 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal para crear curso -->
+    <div class="modal fade" id="createCourseModal" tabindex="-1" aria-labelledby="createCourseModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form [formGroup]="courseForm" (ngSubmit)="submitCourse()" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Crear Nuevo Curso</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Título</label>
+                            <input type="text" class="form-control" formControlName="title">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Descripción</label>
+                            <textarea class="form-control" rows="3" formControlName="description"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Precio</label>
+                                <input type="number" class="form-control" formControlName="price">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Descuento (%)</label>
+                                <input type="number" class="form-control" formControlName="discount">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nivel</label>
+                                <select class="form-select" formControlName="level">
+                                    <option value="BEGINNER">Beginner</option>
+                                    <option value="INTERMEDIATE">Intermediate</option>
+                                    <option value="ADVANCED">Advanced</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Categoría</label>
+                                <input type="number" class="form-control" formControlName="categoryId">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Instructor</label>
+                            <input type="number" class="form-control" formControlName="instructorId">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Imagen</label>
+                            <input type="file" class="form-control" (change)="onFileSelected($event)">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Guardar Curso</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 </div>

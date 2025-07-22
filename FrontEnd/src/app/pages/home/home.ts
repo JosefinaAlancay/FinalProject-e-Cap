@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [Stats,TopCourses ,Instructor, RouterModule],
+  imports: [Stats ,Instructor, RouterModule],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })

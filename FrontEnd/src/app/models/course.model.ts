@@ -6,9 +6,9 @@ export interface Course {
     price: number;
     discount: number;
     level:string
-    rating: number;
-    total_lessons: number;
-    total_duration: string;
+    rating?: number;
+    total_lessons?: number;
+    total_duration?: string ;
     category: {
         id: string;
         name: string;
